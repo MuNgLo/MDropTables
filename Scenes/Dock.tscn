@@ -1,0 +1,139 @@
+[gd_scene load_steps=7 format=3 uid="uid://b5jbxd8ys6bgy"]
+
+[ext_resource type="Texture2D" uid="uid://c7q1urwnthqkn" path="res://addons/MDropTables/Icons/Plus.png" id="1_13jij"]
+[ext_resource type="Script" uid="uid://bog28kxr7kh" path="res://addons/MDropTables/Script/DropTableDock.cs" id="1_k5u25"]
+[ext_resource type="PackedScene" uid="uid://bjis6lrjtt1hm" path="res://addons/MDropTables/Scenes/DropEntry.tscn" id="2_ltv4b"]
+[ext_resource type="Script" uid="uid://ua2bx2lqklw8" path="res://addons/MDropTables/Script/Bottom.cs" id="3_2ma6u"]
+[ext_resource type="Script" uid="uid://disgkvnyt811l" path="res://addons/MDropTables/Script/Header.cs" id="3_ltv4b"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_swkjk"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.14845797, 0.20080009, 0.3025004, 0.6)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.1422216, 0.16614148, 0.21400559, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+corner_detail = 5
+
+[node name="Drop Table" type="ScrollContainer" node_paths=PackedStringArray("btnStartTest", "entries", "header", "bottom", "footer")]
+custom_minimum_size = Vector2(300, 0)
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 300.0
+grow_vertical = 2
+script = ExtResource("1_k5u25")
+btnStartTest = NodePath("GridContainer/Header/MarginContainer/GridContainer/Control/GridContainer/btnStartTest")
+entries = NodePath("GridContainer")
+header = NodePath("GridContainer/Header")
+bottom = NodePath("GridContainer/Bottom")
+footer = NodePath("GridContainer/Footer")
+entryPrefab = ExtResource("2_ltv4b")
+
+[node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Header" type="PanelContainer" parent="GridContainer" node_paths=PackedStringArray("lblTotalWeight", "resourceControl", "tableDock")]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_swkjk")
+script = ExtResource("3_ltv4b")
+lblTotalWeight = NodePath("MarginContainer/GridContainer/Control/GridContainer/Control/TotalWeightNumber")
+resourceControl = NodePath("MarginContainer/GridContainer/ResourcePicker")
+tableDock = NodePath("../..")
+
+[node name="MarginContainer" type="MarginContainer" parent="GridContainer/Header"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 2
+
+[node name="GridContainer" type="GridContainer" parent="GridContainer/Header/MarginContainer"]
+layout_mode = 2
+
+[node name="ResourcePicker" type="BoxContainer" parent="GridContainer/Header/MarginContainer/GridContainer"]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+
+[node name="Control" type="Control" parent="GridContainer/Header/MarginContainer/GridContainer"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="GridContainer" type="GridContainer" parent="GridContainer/Header/MarginContainer/GridContainer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 2
+
+[node name="Label" type="Label" parent="GridContainer/Header/MarginContainer/GridContainer/Control/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Simulation Test"
+
+[node name="btnStartTest" type="Button" parent="GridContainer/Header/MarginContainer/GridContainer/Control/GridContainer"]
+layout_mode = 2
+text = "Start"
+
+[node name="TotalWeightLabel" type="Label" parent="GridContainer/Header/MarginContainer/GridContainer/Control/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "TotalWeight:"
+
+[node name="Control" type="HFlowContainer" parent="GridContainer/Header/MarginContainer/GridContainer/Control/GridContainer"]
+layout_mode = 2
+
+[node name="TotalWeightNumber" type="Label" parent="GridContainer/Header/MarginContainer/GridContainer/Control/GridContainer/Control"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "----"
+horizontal_alignment = 2
+
+[node name="Control" type="Control" parent="GridContainer/Header/MarginContainer/GridContainer/Control/GridContainer/Control"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="Bottom" type="PanelContainer" parent="GridContainer" node_paths=PackedStringArray("tableDock", "btnAddEntry")]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_swkjk")
+script = ExtResource("3_2ma6u")
+tableDock = NodePath("../..")
+btnAddEntry = NodePath("MarginContainer/HFlowContainer/btnAddEntry")
+
+[node name="MarginContainer" type="MarginContainer" parent="GridContainer/Bottom"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 2
+
+[node name="HFlowContainer" type="HFlowContainer" parent="GridContainer/Bottom/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="GridContainer/Bottom/MarginContainer/HFlowContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "----------"
+
+[node name="btnAddEntry" type="TextureButton" parent="GridContainer/Bottom/MarginContainer/HFlowContainer"]
+custom_minimum_size = Vector2(24, 0)
+layout_mode = 2
+texture_normal = ExtResource("1_13jij")
+stretch_mode = 0
+
+[node name="Footer" type="Control" parent="GridContainer"]
+layout_mode = 2
+size_flags_vertical = 3

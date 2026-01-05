@@ -1,0 +1,103 @@
+[gd_scene load_steps=5 format=3 uid="uid://bjis6lrjtt1hm"]
+
+[ext_resource type="Script" uid="uid://dxfr43w1fc52k" path="res://addons/MDropTables/Script/DropEntryNode.cs" id="1_4au35"]
+[ext_resource type="Texture2D" uid="uid://b131uvwbhe5g7" path="res://addons/MDropTables/Icons/Minus.png" id="1_ndmk8"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_swkjk"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.14845797, 0.20080009, 0.3025004, 0.6)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.1422216, 0.16614148, 0.21400559, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+corner_detail = 5
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4au35"]
+
+[node name="DropEntry" type="PanelContainer" node_paths=PackedStringArray("btnRemove", "spnWeight", "rtxDropChance", "dropEntryName", "resourceControl")]
+custom_minimum_size = Vector2(240, 0)
+offset_right = 459.0
+offset_bottom = 80.0
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_swkjk")
+script = ExtResource("1_4au35")
+btnRemove = NodePath("MarginContainer/VFlowContainer/HFlowContainer/btnRemove")
+spnWeight = NodePath("MarginContainer/VFlowContainer/HFlowContainer-2/weightNumber")
+rtxDropChance = NodePath("MarginContainer/VFlowContainer/HFlowContainer-2/rtxDropChance")
+dropEntryName = NodePath("MarginContainer/VFlowContainer/HFlowContainer/EntryName")
+resourceControl = NodePath("MarginContainer/VFlowContainer/HFlowContainer-3/ResourcePicker")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VFlowContainer" type="GridContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="HFlowContainer" type="HFlowContainer" parent="MarginContainer/VFlowContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="EntryName" type="Label" parent="MarginContainer/VFlowContainer/HFlowContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "GoldCoin"
+
+[node name="btnRemove" type="TextureButton" parent="MarginContainer/VFlowContainer/HFlowContainer"]
+custom_minimum_size = Vector2(24, 0)
+layout_mode = 2
+texture_normal = ExtResource("1_ndmk8")
+stretch_mode = 0
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VFlowContainer"]
+layout_mode = 2
+
+[node name="HFlowContainer-2" type="HFlowContainer" parent="MarginContainer/VFlowContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="rtxDropChance" type="RichTextLabel" parent="MarginContainer/VFlowContainer/HFlowContainer-2"]
+custom_minimum_size = Vector2(68, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_styles/normal = SubResource("StyleBoxEmpty_4au35")
+bbcode_enabled = true
+text = "100.00%"
+fit_content = true
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Control" type="Control" parent="MarginContainer/VFlowContainer/HFlowContainer-2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="MarginContainer/VFlowContainer/HFlowContainer-2"]
+layout_mode = 2
+size_flags_horizontal = 10
+text = "Weight:"
+
+[node name="weightNumber" type="SpinBox" parent="MarginContainer/VFlowContainer/HFlowContainer-2"]
+layout_mode = 2
+max_value = 1000.0
+step = 0.1
+alignment = 2
+
+[node name="HFlowContainer-3" type="HFlowContainer" parent="MarginContainer/VFlowContainer"]
+layout_mode = 2
+reverse_fill = true
+
+[node name="ResourcePicker" type="BoxContainer" parent="MarginContainer/VFlowContainer/HFlowContainer-3"]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+size_flags_horizontal = 3
