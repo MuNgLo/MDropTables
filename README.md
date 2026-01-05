@@ -4,6 +4,8 @@ v1.0
 
 Editor tooling to create and edit and run drop tests on weighted drop tables.
 
+![GitHub Logo](Example/ScreenShot01.png)
+
 # Install
 
 Place all repo files in /addons/MDropTables
