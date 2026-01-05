@@ -4,7 +4,7 @@ v1.0
 
 Editor tooling to create and edit and run drop tests on weighted drop tables.
 
-![GitHub Logo](Example/ScreenShot01.png)
+![GitHub Logo](Example/ScreenShot01.png)  ![GitHub Logo](Example/ScreenShot02.png) 
 
 # Install
 
