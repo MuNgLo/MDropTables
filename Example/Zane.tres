@@ -1,0 +1,36 @@
+[gd_resource type="Resource" script_class="DropTableResource" load_steps=12 format=3 uid="uid://5e28725cyb1g"]
+
+[ext_resource type="Script" uid="uid://b8f7n7dmasyrd" path="res://addons/MDropTables/Script/DropTableEntryResource.cs" id="1_2a44c"]
+[ext_resource type="ArrayMesh" uid="uid://ctxi1oquxkew0" path="res://Meshes/Plants/Fruit01.res" id="1_e5rnr"]
+[ext_resource type="Script" uid="uid://chhdin7a4rkbn" path="res://addons/MDropTables/Script/DropTableResource.cs" id="2_e5rnr"]
+[ext_resource type="ArrayMesh" uid="uid://dekpikqkc5xna" path="res://Meshes/Swords/Falchion.res" id="3_ah8ip"]
+[ext_resource type="ArrayMesh" uid="uid://djct0eqfxv03s" path="res://Meshes/Axes/2HAxe01.res" id="4_rstsj"]
+[ext_resource type="ArrayMesh" uid="uid://cqi342c6gk1ls" path="res://Meshes/Hammers/BigBonk_01.res" id="5_xcnlj"]
+
+[sub_resource type="Resource" id="Resource_xcnlj"]
+script = ExtResource("1_2a44c")
+weight = 5.0
+drop = ExtResource("1_e5rnr")
+
+[sub_resource type="Resource" id="Resource_n3jug"]
+script = ExtResource("1_2a44c")
+weight = 80.0
+drop = ExtResource("3_ah8ip")
+
+[sub_resource type="Resource" id="Resource_55w2m"]
+script = ExtResource("1_2a44c")
+weight = 100.0
+drop = ExtResource("4_rstsj")
+
+[sub_resource type="Resource" id="Resource_cnpaj"]
+script = ExtResource("1_2a44c")
+weight = 80.0
+drop = ExtResource("5_xcnlj")
+
+[sub_resource type="Resource" id="Resource_2g261"]
+script = ExtResource("1_2a44c")
+
+[resource]
+script = ExtResource("2_e5rnr")
+entries = [SubResource("Resource_xcnlj"), SubResource("Resource_n3jug"), SubResource("Resource_55w2m"), SubResource("Resource_cnpaj"), SubResource("Resource_2g261")]
+metadata/_custom_type_script = "uid://chhdin7a4rkbn"

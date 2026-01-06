@@ -1,6 +1,6 @@
 # MDropTables
 
-v1.0
+v1.1
 
 Editor tooling to create and edit and run drop tests on weighted drop tables.
 
@@ -21,6 +21,15 @@ Making sure the % shown is accurate.
 Use the Test button to test how the numbers stack up. It constructs a table and pulls 10k random drops and presents the result
 in Output.
 
-# ToDo
-The runtime, project level bit is not made yet. So a few thigns might change.
+In runtime create an instance of DropTable. Passing the DropTableResource you want to use as the parameter.
+Then ask the DropTable instance for drop. Easy as that.
+
+
+```cs
+        dropTable = new DropTable(dropTableResource);
+		DropEntry loot = dropTable.GetDrop();
+        // loot.Drop is the resource
+```
+
+
 

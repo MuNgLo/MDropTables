@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="DropTableResource" load_steps=2 format=3 uid="uid://smn2slhb1tg1"]
+
+[ext_resource type="Script" uid="uid://chhdin7a4rkbn" path="res://addons/MDropTables/Script/DropTableResource.cs" id="1_cgdkl"]
+
+[resource]
+script = ExtResource("1_cgdkl")
+entries = null
+metadata/_custom_type_script = "uid://chhdin7a4rkbn"

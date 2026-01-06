@@ -20,8 +20,11 @@ public partial class DropEntryNode : PanelContainer
 		set
 		{
 			resource.EditedResource = value;
-			Name = value.ResourceName;
-			dropEntryName.Text = value.ResourceName;
+			if (value is not null)
+			{
+				Name = value.ResourceName;
+				dropEntryName.Text = value.ResourceName;
+			}
 		}
 	}
 

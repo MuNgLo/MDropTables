@@ -51,19 +51,18 @@ public partial class DropTableDock : Control
 
 	private void StartTest(int size)
 	{
-		if (isTesting) { return; }
+		if (isTesting || header.Table is null) { return; }
 		isTesting = true;
-		DropTable dTable = new();
+		DropTable dTable = new(header.Table);
 		Dictionary<string, int> testResults = new Dictionary<string, int>();
-		foreach (Node child in entries.GetChildren())
+		foreach (DropTableEntryResource entry in header.Table.entries)
 		{
-			if (child is DropEntryNode entry)
+			if(entry.drop is not null)
 			{
-				dTable.Add(new DropEntry(entry.Name, entry.Weight), false);
-				if (!testResults.ContainsKey(entry.Name)) { testResults[entry.Name] = 0; }
+				if (!testResults.ContainsKey(entry.drop.ResourceName)) { testResults[entry.drop.ResourceName] = 0; }
 			}
 		}
-		dTable.RecalculateTable();
+		dTable.RecalculatePercentage();
 		if (dTable.Count < 1)
 		{
 			GD.PrintRich($"[color=blue]Drop table Test[/color] Aborted. Table has no items");
@@ -77,8 +76,10 @@ public partial class DropTableDock : Control
 			{
 				GD.PrintErr($"DropTableDock::StartTest() Failed to get drop. Iteration [{i}] returned NULL!");
 				continue;
+			}else if(drop.Drop is not null)
+			{
+				testResults[drop.Name]++;
 			}
-			testResults[drop.Name]++;
 		}
 
 		// Present results
@@ -91,6 +92,7 @@ public partial class DropTableDock : Control
 		{
 			if (child is DropEntryNode entry)
 			{
+				if(entry.DropResource is null || entry.Weight <= 0.0f){ continue; }
 				DropEntry drop = dTable.Get(entry.Name);
 				if (drop is null)
 				{

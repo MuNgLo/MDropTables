@@ -2,7 +2,7 @@ using Godot;
 
 namespace MDropTables;
 
-[Tool, GlobalClass]
+[Tool]
 public partial class DropTableEntryResource : Resource
 {
     [Export] public float weight = 0.0f;
