@@ -60,7 +60,7 @@ public partial class DropEntryNode : PanelContainer
 		resource = new EditorResourcePicker();
 		resource.Editable = true;
 		resource.ToggleMode = true;
-		resource.BaseType = "Mesh";
+		resource.BaseType = tableDock.SupportedTypes;
 		resource.ResourceChanged += WhenResourceChanged;
 		resource.SizeFlagsHorizontal = SizeFlags.ExpandFill;
 		resource.SetSize(new Vector2(0, 0));

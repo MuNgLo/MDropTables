@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://dqimr3m8rppfx"]
+
+[ext_resource type="Script" uid="uid://cgplohxnm5v3u" path="res://addons/MDropTables/Script/SupportedTypeEntry.cs" id="1_bmkdd"]
+[ext_resource type="Texture2D" uid="uid://b131uvwbhe5g7" path="res://addons/MDropTables/Icons/Minus.png" id="2_m400x"]
+
+[node name="SupportedTypeEntry" type="HFlowContainer" node_paths=PackedStringArray("lineEdit", "btnDelete")]
+size_flags_horizontal = 3
+script = ExtResource("1_bmkdd")
+lineEdit = NodePath("LineEdit")
+btnDelete = NodePath("TextureButton")
+
+[node name="LineEdit" type="LineEdit" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Case sensitive. Make very sure the Type exists"
+
+[node name="TextureButton" type="TextureButton" parent="."]
+layout_mode = 2
+texture_normal = ExtResource("2_m400x")
+stretch_mode = 0

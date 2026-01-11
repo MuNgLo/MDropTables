@@ -10,6 +10,7 @@ public partial class MDropTables : EditorPlugin
     private Control dock;
     public override void _EnterTree()
     {
+        
         dock = ResourceLoader.Load<PackedScene>("res://addons/MDropTables/Scenes/Dock.tscn").Instantiate<Control>();
         AddControlToDock(DockSlot.RightBl, dock);
     }

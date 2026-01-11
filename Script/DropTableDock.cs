@@ -2,6 +2,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MDropTables;
 
@@ -13,9 +14,14 @@ public partial class DropTableDock : Control
 	[Export] private Header header;
 	[Export] private Bottom bottom;
 	[Export] private Control footer;
+	[Export] private SupportedTypes supTypes;
 	[Export] private PackedScene entryPrefab;
 
 	private bool isTesting = false;
+
+	public string SupportedTypes => string.Join(',', header.Table.supportedTypes);
+	public bool HasTableAssigned => header.Table is not null;
+
 	public override void _Ready()
 	{
 		btnStartTest.Pressed += WhenStartTestPressed;
@@ -26,6 +32,7 @@ public partial class DropTableDock : Control
 		GD.Print($"DropTableDock::LoadResource() resource is null [{resource is null}]");
 		ClearTable();
 		if (resource is null) { return; }
+		supTypes.ReBuildEntries(header.Table.supportedTypes);
 		LoadTable();
 		RecalculateTable();
 	}
@@ -57,7 +64,7 @@ public partial class DropTableDock : Control
 		Dictionary<string, int> testResults = new Dictionary<string, int>();
 		foreach (DropTableEntryResource entry in header.Table.entries)
 		{
-			if(entry.drop is not null)
+			if (entry.drop is not null)
 			{
 				if (!testResults.ContainsKey(entry.drop.ResourceName)) { testResults[entry.drop.ResourceName] = 0; }
 			}
@@ -76,7 +83,8 @@ public partial class DropTableDock : Control
 			{
 				GD.PrintErr($"DropTableDock::StartTest() Failed to get drop. Iteration [{i}] returned NULL!");
 				continue;
-			}else if(drop.Drop is not null)
+			}
+			else if (drop.Drop is not null)
 			{
 				testResults[drop.Name]++;
 			}
@@ -92,7 +100,7 @@ public partial class DropTableDock : Control
 		{
 			if (child is DropEntryNode entry)
 			{
-				if(entry.DropResource is null || entry.Weight <= 0.0f){ continue; }
+				if (entry.DropResource is null || entry.Weight <= 0.0f) { continue; }
 				DropEntry drop = dTable.Get(entry.Name);
 				if (drop is null)
 				{
@@ -172,7 +180,7 @@ public partial class DropTableDock : Control
 
 	private DropEntryNode AddNewEntry()
 	{
-		if(header.Table is null){ return null; }
+		if (header.Table is null) { return null; }
 		DropEntryNode newEntry = entryPrefab.Instantiate<DropEntryNode>();
 		entries.RemoveChild(bottom);
 		entries.RemoveChild(footer);
@@ -204,13 +212,13 @@ public partial class DropTableDock : Control
 				drop = dropNodes[i].DropResource
 			};
 		}
-		if(header.Table is null){ return; }
+		if (header.Table is null) { return; }
 		header.Table.entries = entryResources;
 		ResourceSaver.Save(header.Table);
 	}
 	private void LoadTable()
 	{
-		if(header.Table is null || header.Table.entries is null){ return; }
+		if (header.Table is null || header.Table.entries is null) { return; }
 		foreach (DropTableEntryResource entryResource in header.Table.entries)
 		{
 			DropEntryNode newNode = AddNewEntry();
@@ -223,6 +231,55 @@ public partial class DropTableDock : Control
 	internal void WhenEntryChanged(DropEntryNode dropEntryNode)
 	{
 		SaveTable();
+	}
+
+	public void WhenDeleteTypePressed(string newType, SupportedTypeEntry entry)
+	{
+		if (!header.Table.supportedTypes.Contains(newType))
+		{
+			entry.QueueFree();
+		}
+
+		ConfirmationDialog confirm = new ConfirmationDialog();
+		confirm.Title = $"Remove {entry.Name}";
+		confirm.DialogText = $"Are you sure you want to remove {entry.Name} from the supported Types?";
+
+		confirm.Confirmed += () =>
+		{
+			if (header.Table.supportedTypes.Contains(newType))
+			{
+				header.Table.supportedTypes = header.Table.supportedTypes.Where(p => p != newType).ToArray();
+				SaveTable();
+				ClearTable();
+				supTypes.ReBuildEntries(header.Table.supportedTypes);
+				LoadTable();
+				RecalculateTable();
+			}
+			entry.QueueFree();
+			confirm.QueueFree();
+		};
+		confirm.Canceled += () =>
+		{
+			confirm.QueueFree();
+		};
+		AddChild(confirm);
+		confirm.PopupCentered();
+		confirm.Show();
+	}
+
+	internal bool WhenTypeSubmitted(string newType, SupportedTypeEntry supportedTypeEntry)
+	{
+		if (!header.Table.supportedTypes.Contains(newType))
+		{
+			header.Table.supportedTypes = header.Table.supportedTypes.Append(newType).ToArray();
+			SaveTable();
+			ClearTable();
+			supTypes.ReBuildEntries(header.Table.supportedTypes);
+			LoadTable();
+			RecalculateTable();
+			return true;
+		}
+		return false;
 	}
 }// EOF CLASS
 #endif

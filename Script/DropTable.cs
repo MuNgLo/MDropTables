@@ -18,9 +18,12 @@ public partial class DropTable
     {
         entries = new List<DropEntry>();
         totalWeight = 0.0f;
-        foreach (DropTableEntryResource entry in dropTableResource.entries)
+        if (dropTableResource.entries is not null)
         {
-            Add(new DropEntry(entry.weight, entry.drop), false);
+            foreach (DropTableEntryResource entry in dropTableResource.entries)
+            {
+                Add(new DropEntry(entry.weight, entry.drop), false);
+            }
         }
         RecalculateTotalWeight();
     }

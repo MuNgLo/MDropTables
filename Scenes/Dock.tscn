@@ -1,10 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://b5jbxd8ys6bgy"]
+[gd_scene load_steps=10 format=3 uid="uid://b5jbxd8ys6bgy"]
 
 [ext_resource type="Texture2D" uid="uid://c7q1urwnthqkn" path="res://addons/MDropTables/Icons/Plus.png" id="1_13jij"]
 [ext_resource type="Script" uid="uid://bog28kxr7kh" path="res://addons/MDropTables/Script/DropTableDock.cs" id="1_k5u25"]
 [ext_resource type="PackedScene" uid="uid://bjis6lrjtt1hm" path="res://addons/MDropTables/Scenes/DropEntry.tscn" id="2_ltv4b"]
 [ext_resource type="Script" uid="uid://ua2bx2lqklw8" path="res://addons/MDropTables/Script/Bottom.cs" id="3_2ma6u"]
 [ext_resource type="Script" uid="uid://disgkvnyt811l" path="res://addons/MDropTables/Script/Header.cs" id="3_ltv4b"]
+[ext_resource type="Script" uid="uid://x6d6fysxxt3e" path="res://addons/MDropTables/Script/SupportedTypes.cs" id="4_xixpo"]
+[ext_resource type="PackedScene" uid="uid://dqimr3m8rppfx" path="res://addons/MDropTables/Scenes/SupportedTypeEntry.tscn" id="5_o3pvo"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_swkjk"]
 content_margin_left = 0.0
@@ -23,7 +25,9 @@ corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 corner_detail = 5
 
-[node name="Drop Table" type="ScrollContainer" node_paths=PackedStringArray("btnStartTest", "entries", "header", "bottom", "footer")]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3th4q"]
+
+[node name="Drop Table" type="ScrollContainer" node_paths=PackedStringArray("btnStartTest", "entries", "header", "bottom", "footer", "supTypes")]
 custom_minimum_size = Vector2(300, 0)
 anchors_preset = 9
 anchor_bottom = 1.0
@@ -35,6 +39,7 @@ entries = NodePath("GridContainer")
 header = NodePath("GridContainer/Header")
 bottom = NodePath("GridContainer/Bottom")
 footer = NodePath("GridContainer/Footer")
+supTypes = NodePath("GridContainer/Header/MarginContainer/GridContainer/SupportedTypes")
 entryPrefab = ExtResource("2_ltv4b")
 
 [node name="GridContainer" type="GridContainer" parent="."]
@@ -64,6 +69,35 @@ layout_mode = 2
 custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
 
+[node name="SupportedTypes" type="GridContainer" parent="GridContainer/Header/MarginContainer/GridContainer" node_paths=PackedStringArray("tableDock", "btnToggleVis", "btnAddEntry", "entries")]
+layout_mode = 2
+script = ExtResource("4_xixpo")
+tableDock = NodePath("../../../../..")
+btnToggleVis = NodePath("btnToggleVis")
+btnAddEntry = NodePath("GridContainer/Add/btnAdd")
+entryPrefab = ExtResource("5_o3pvo")
+entries = NodePath("GridContainer")
+
+[node name="btnToggleVis" type="Button" parent="GridContainer/Header/MarginContainer/GridContainer/SupportedTypes"]
+layout_mode = 2
+size_flags_horizontal = 0
+tooltip_text = "Add the names of the Resource Types you want to filter for when selecting what to drop in the entries of this table."
+theme_override_styles/normal = SubResource("StyleBoxEmpty_3th4q")
+text = "> Supported Types"
+
+[node name="GridContainer" type="GridContainer" parent="GridContainer/Header/MarginContainer/GridContainer/SupportedTypes"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Add" type="HFlowContainer" parent="GridContainer/Header/MarginContainer/GridContainer/SupportedTypes/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="btnAdd" type="TextureButton" parent="GridContainer/Header/MarginContainer/GridContainer/SupportedTypes/GridContainer/Add"]
+layout_mode = 2
+texture_normal = ExtResource("1_13jij")
+stretch_mode = 0
+
 [node name="Control" type="Control" parent="GridContainer/Header/MarginContainer/GridContainer"]
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
@@ -85,11 +119,13 @@ text = "Simulation Test"
 
 [node name="btnStartTest" type="Button" parent="GridContainer/Header/MarginContainer/GridContainer/Control/GridContainer"]
 layout_mode = 2
+tooltip_text = "Run 10K random drops on the table. Results printed to Output"
 text = "Start"
 
 [node name="TotalWeightLabel" type="Label" parent="GridContainer/Header/MarginContainer/GridContainer/Control/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
+tooltip_text = "The total sum of all weight in the table."
 text = "TotalWeight:"
 
 [node name="Control" type="HFlowContainer" parent="GridContainer/Header/MarginContainer/GridContainer/Control/GridContainer"]
@@ -131,6 +167,7 @@ text = "----------"
 [node name="btnAddEntry" type="TextureButton" parent="GridContainer/Bottom/MarginContainer/HFlowContainer"]
 custom_minimum_size = Vector2(24, 0)
 layout_mode = 2
+tooltip_text = "Add a new entry"
 texture_normal = ExtResource("1_13jij")
 stretch_mode = 0
 
