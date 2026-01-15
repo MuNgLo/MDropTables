@@ -39,4 +39,5 @@ Then ask the DropTable instance for drop. Easy as that.
 ```
 
 
-
+# Changelog
+1.3 Fixed name property resulted in null exception

@@ -12,7 +12,7 @@ public partial class DropEntry
     public float Weight { get => weight; set => weight = value; }
     public float Percentage { get => percentage; set => percentage = value; }
     public Resource Drop { get => resource; set => resource = value; }
-    public string Name => resource.ResourceName;
+    public string Name => resource is null ? "-NONE-" : resource.ResourceName;
     
     public DropEntry(float weight, Resource resource)
     {
