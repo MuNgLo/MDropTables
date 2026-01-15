@@ -1,6 +1,6 @@
 # MDropTables ( Written in C#. Needs the Mono version of Godot to run)
 
-v1.2
+v1.3
 
 Editor tooling to create and edit and run drop tests on weighted drop tables.
 
